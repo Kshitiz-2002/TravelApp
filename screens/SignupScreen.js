@@ -142,7 +142,7 @@ const SignupScreen = ({ navigation }) => {
   const handleVerifyOTP = () => {
     if (enteredOTP === generatedOTP) {
       // Redirect to Home screen if OTP is correct
-      navigation.navigate('Home');
+      navigation.navigate('NavigationScreen');
     } else {
       Alert.alert('Wrong OTP', 'Please enter the correct OTP.');
     }
