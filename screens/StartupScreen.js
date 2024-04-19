@@ -29,10 +29,10 @@ const StartupScreen = ({ navigation }) => {
       <View
         style={{ flex: 0.5, justifyContent: "flex-end", alignItems: "center" }}
       >
-        <Text style={{ fontSize: 25, fontWeight: 450 }}>
+        <Text style={{ fontSize: 25, fontWeight: 400 }}>
           Your travel companion,
         </Text>
-        <Text style={{ fontSize: 25, fontWeight: 450 }}>wherever you go</Text>
+        <Text style={{ fontSize: 25, fontWeight: 400 }}>wherever you go</Text>
       </View>
       <View
         style={{

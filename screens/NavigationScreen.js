@@ -1,7 +1,7 @@
 import React from "react";
-import { SafeAreaView, View } from "react-native";
+import { Platform } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons } from "@expo/vector-icons"; // Import Ionicons for icons
+import { Ionicons } from "@expo/vector-icons";
 
 import HomeScreen from "./HomeScreen";
 import AccountScreen from "./AccountScreen";
@@ -13,80 +13,69 @@ const Tab = createBottomTabNavigator();
 
 const NavigationScreen = () => {
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: "white",
-        borderRadius: 20,
-        overflow: "hidden",
-      }}
+    <Tab.Navigator
+      initialRouteName="Home"
+      screenOptions={({ route }) => ({
+        tabBarStyle: {
+          backgroundColor: "#5053FF",
+          borderTopRightRadius: 35,
+          borderTopLeftRadius: 35,
+          paddingBottom: 0,
+          height: Platform.OS === "ios" ? "12%" : "11%",
+        },
+        tabBarShowLabel: false,
+        tabBarActiveTintColor: "white",
+        tabBarInactiveTintColor: "white",
+        tabBarIcon: ({ color, size, focused }) => {
+          let iconName;
+          let iconSize = 30;
+
+          if (route.name === "Train") {
+            iconName = "train";
+          } else if (route.name === "Bus") {
+            iconName = "bus";
+          } else if (route.name === "Home") {
+            iconName = "home";
+          } else if (route.name === "Booking") {
+            iconName = "calendar";
+          } else if (route.name === "Account") {
+            iconName = "person";
+          }
+
+          if (focused) {
+            iconSize = 45; 
+          }
+
+          return <Ionicons name={iconName} size={iconSize} color={color} />;
+        },
+      })}
     >
-      <Tab.Navigator
-        initialRouteName="Home"
-        tabBarOptions={{
-          activeTintColor: "#5053FF",
-          inactiveTintColor: "#C2C2C2",
-          labelStyle: { fontSize: 14, fontWeight: "bold" },
-          style: {
-            backgroundColor: "white",
-            borderTopWidth: 0,
-            borderRadius: 20,
-            marginHorizontal: 20,
-          },
-        }}
-      >
-        <Tab.Screen
-          name="Train"
-          component={TrainBooking}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="train" size={size} color={color} />
-            ),
-            headerShown: false,
-          }}
-        />
-        <Tab.Screen
-          name="Bus"
-          component={BusBooking}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="bus" size={size} color={color} />
-            ),
-            headerShown: false,
-          }}
-        />
-        <Tab.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="home" size={size} color={color} />
-            ),
-            headerShown: false,
-          }}
-        />
-        <Tab.Screen
-          name="Booking"
-          component={BookingScreen}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="calendar" size={size} color={color} />
-            ),
-            headerShown: false,
-          }}
-        />
-        <Tab.Screen
-          name="Account"
-          component={AccountScreen}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="person" size={size} color={color} />
-            ),
-            headerShown: false,
-          }}
-        />
-      </Tab.Navigator>
-    </View>
+      <Tab.Screen
+        name="Train"
+        component={TrainBooking}
+        options={{ tabBarLabel: "", headerShown: false }} 
+      />
+      <Tab.Screen
+        name="Bus"
+        component={BusBooking}
+        options={{ tabBarLabel: "", headerShown: false }} 
+      />
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ tabBarLabel: "", headerShown: false }}
+      />
+      <Tab.Screen
+        name="Booking"
+        component={BookingScreen}
+        options={{ tabBarLabel: "", headerShown: false }} 
+      />
+      <Tab.Screen
+        name="Account"
+        component={AccountScreen}
+        options={{ tabBarLabel: "", headerShown: false }} 
+      />
+    </Tab.Navigator>
   );
 };
 
