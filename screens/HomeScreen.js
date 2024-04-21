@@ -1,8 +1,17 @@
-import { Text, View, SafeAreaView, ScrollView } from "react-native";
+import {
+  Text,
+  View,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import Card from "../components/Card";
 import BookingCard from "../components/BookingCard";
+import React,   { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 const HomeScreen = () => {
+  const navigation = useNavigation();
   const bookingsData = [
     {
       id: 1,
@@ -20,8 +29,28 @@ const HomeScreen = () => {
       desc: "Bus Booking 3",
     },
   ];
+
+  const handleCardPress = (desc) => {
+    switch (desc) {
+      case "Book Train":
+        navigation.navigate("Train");
+        break;
+        case "Book Bus":
+          navigation.navigate("Bus");
+        break;
+        case "Bookings":
+        navigation.navigate("Booking");
+        break;
+      case "Account":
+        navigation.navigate("Account");
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white", paddingTop: 30 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#F4F4F4", paddingTop: 30 }}>
       <View
         style={{
           flex: 0.4,
@@ -47,11 +76,18 @@ const HomeScreen = () => {
             paddingHorizontal: 20,
           }}
         >
-          <Card
-            imgUrl={require("../assets/TrainVector.png")}
-            desc={"Book Train"}
-          />
-          <Card imgUrl={require("../assets/BusVector.png")} desc={"Book Bus"} />
+          <TouchableOpacity style={{flex:1, alignItems:'center'}} onPress={() => handleCardPress("Book Train")}>
+            <Card
+              imgUrl={require("../assets/TrainVector.png")}
+              desc={"Book Train"}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={{flex:1, alignItems:"center"}} onPress={() => handleCardPress("Book Bues")}>
+            <Card
+              imgUrl={require("../assets/BusVector.png")}
+              desc={"Book Bus"}
+            />
+          </TouchableOpacity>
         </View>
         <View
           style={{
@@ -62,14 +98,18 @@ const HomeScreen = () => {
             paddingHorizontal: 20,
           }}
         >
-          <Card
-            imgUrl={require("../assets/BookingVector.png")}
-            desc={"Bookings"}
-          />
-          <Card
-            imgUrl={require("../assets/AccountVector.png")}
-            desc={"Account"}
-          />
+          <TouchableOpacity style={{flex:1, alignItems:"center"}} onPress={() => handleCardPress("Bookings")}>
+            <Card
+              imgUrl={require("../assets/BookingVector.png")}
+              desc={"Bookings"}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={{flex:1, alignItems:"center"}} onPress={() => handleCardPress("Account")}>
+            <Card
+              imgUrl={require("../assets/AccountVector.png")}
+              desc={"Account"}
+            />
+          </TouchableOpacity>
         </View>
       </View>
       <View style={{ flex: 3 }}>
@@ -84,11 +124,13 @@ const HomeScreen = () => {
             Your Bookings:
           </Text>
         </View>
-        <ScrollView
-          style={{ flex: 1, paddingHorizontal: 20 }}
-        >
+        <ScrollView style={{ flex: 1, paddingHorizontal: 20 }}>
           {bookingsData.map((booking) => (
-            <BookingCard key={booking.id} imgUrl={booking.imgUrl} desc={booking.desc} />
+            <BookingCard
+              key={booking.id}
+              imgUrl={booking.imgUrl}
+              desc={booking.desc}
+            />
           ))}
         </ScrollView>
       </View>
