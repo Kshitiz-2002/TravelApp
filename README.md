@@ -9,10 +9,6 @@ This is a mobile application for booking train and bus tickets.
 - View bookings
 - Update account information
 
-## Screenshots
-
-[Include screenshots of your app here]
-
 ## Technologies Used
 
 - React Native
@@ -62,9 +58,6 @@ npm start
 
 Contributions are welcome! Please fork the repository and create a pull request.
 
-## License
-
-[Include your project's license here]
 ```
 
 Feel free to customize it according to your project's specific details and requirements. If you need further assistance or have any questions, feel free to ask!
