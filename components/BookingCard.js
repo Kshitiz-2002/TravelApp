@@ -1,40 +1,61 @@
-import { ImageBackground, Text, View } from "react-native";
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
-const BookingCard = ({ imgUrl, desc }) => {
+const BookingCard = ({ desc }) => {
+  const { departure, arrival, duration, from, to, date } = desc;
+
   return (
-    <View
-      style={{
-        backgroundColor: "#5053FF",
-        height: "100%",
-        width: "100%",
-        flexDirection: "row",
-        alignItems: "center",
-        borderRadius: 20,
-        marginVertical: 10,
-        elevation: 5,
-      }}
-    >
-      <View style={{ flex: 1.3 }}>
-        <ImageBackground
-          source={imgUrl}
-          style={{
-            width: "100%",
-            height: "100%",
-            resizeMode: "cover",
-            borderRadius: 20,
-            overflow: "hidden",
-            opacity: 0.7, // Adjust opacity as needed
-          }}
-        >
-        </ImageBackground>
+    <View style={styles.container}>
+      <View style={styles.departureContainer}>
+        <Text style={styles.airport}>{from}</Text>
+        <Text style={styles.date}>{date}</Text>
+        <Text style={styles.time}>{departure}</Text>
       </View>
-      <View style={{ flex: 3, justifyContent: 'center' }}>
-        <Text style={{ fontSize: 23, fontWeight: 300, color: "white" }}>
-          {desc}
-        </Text>
+      <Text style={styles.duration}>⌛ {duration}</Text>
+      <View style={styles.arrivalContainer}>
+        <Text style={styles.airport}>{to}</Text>
+        <Text style={styles.date}>{date}</Text>
+        <Text style={styles.time}>{arrival}</Text>
       </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#5053FF',
+    height: 100,
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderRadius: 20,
+    paddingHorizontal: 20,
+    marginVertical: 10
+  },
+  departureContainer: {
+    alignItems: 'flex-start',
+  },
+  arrivalContainer: {
+    alignItems: 'flex-end',
+  },
+  airport: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  date: {
+    color: 'white',
+    fontSize: 14,
+  },
+  time: {
+    color: 'white',
+    fontSize: 16,
+  },
+  duration: {
+    color: 'white',
+    fontSize: 16,
+  },
+});
 
 export default BookingCard;

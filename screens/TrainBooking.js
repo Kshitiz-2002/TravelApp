@@ -19,12 +19,8 @@ const TrainBooking = () => {
   const themeColor = "#5053FF"; // Define your theme color here
 
   const places = [
-    { label: "New York", value: "New York" },
-    { label: "Los Angeles", value: "Los Angeles" },
-    { label: "Chicago", value: "Chicago" },
-    { label: "Houston", value: "Houston" },
-    { label: "Miami", value: "Miami" },
-    // Add more places as needed
+    { label: "Vellore", value: "Vellore" },
+    { label: "Chennai", value: "Chennai" },
   ];
 
   const handleSourceSelect = (value) => {
@@ -235,3 +231,5 @@ const TrainBooking = () => {
 };
 
 export default TrainBooking;
+
+
