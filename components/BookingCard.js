@@ -23,7 +23,7 @@ const BookingCard = ({ desc }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#5053FF',
+    backgroundColor: '#5A8EFB',
     height: 100,
     width: '100%',
     flexDirection: 'row',

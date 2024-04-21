@@ -4,7 +4,7 @@ const Card = ({ imgUrl, desc }) => {
   return (
     <View
       style={{
-        backgroundColor: "#5A8EFB",
+        backgroundColor: "#731EFF",
         height: "70%",
         width: "90%%",
         flexDirection: "row",

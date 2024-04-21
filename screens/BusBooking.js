@@ -36,38 +36,47 @@ const BusBooking = () => {
     setBusCards([
       {
         id: 1,
+        type: "bus",
         name: "Bus 1",
         departure: "10:00 AM",
         arrival: "1:00 PM",
         duration: "3 hours",
+        from: source === "Chennai" ? "MAS" : "",
+        to: destination === "Vellore" ? "KPD" : "",
+        date: "24th April 2024",
       },
       {
         id: 2,
+        type: "bus",
         name: "Bus 2",
         departure: "12:00 PM",
         arrival: "3:00 PM",
         duration: "3 hours",
+        from: source === "Chennai" ? "MAS" : "",
+        to: destination === "Vellore" ? "KPD" : "",
+        date: "24th April 2024",
       },
       {
         id: 3,
+        type: "bus",
         name: "Bus 3",
         departure: "2:00 PM",
         arrival: "5:00 PM",
         duration: "3 hours",
+        from: source === "Chennai" ? "MAS" : "",
+        to: destination === "Vellore" ? "KPD" : "",
+        date: "24th April 2024",
       },
       {
         id: 4,
+        type: "bus",
         name: "Bus 4",
         departure: "4:00 PM",
         arrival: "7:00 PM",
         duration: "3 hours",
-      },
-      {
-        id: 5,
-        name: "Bus 5",
-        departure: "6:00 PM",
-        arrival: "9:00 PM",
-        duration: "3 hours",
+        from: source === "Chennai" ? "MAS" : "",
+        to: destination === "Vellore" ? "KPD" : "",
+        date: "24th April 2024",
       },
       // Add more bus cards as needed
     ]);
@@ -75,6 +84,14 @@ const BusBooking = () => {
 
   const handleBusSelect = (busId) => {
     setSelectedBusId(busId);
+  };
+
+  const handleBookNow = () => {
+    // Clear all inputs
+    setSource("");
+    setDestination("");
+    setSelectedBusId(null);
+    setBusCards([]);
   };
 
   return (
@@ -211,6 +228,7 @@ const BusBooking = () => {
         </ScrollView>
         {destination && selectedBusId && (
           <TouchableOpacity
+            onPress={handleBookNow}
             style={{
               position: "absolute",
               bottom: 20,

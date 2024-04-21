@@ -55,7 +55,7 @@ const BookingScreen = () => {
         }}
       >
         <Text style={{ fontSize: 30, fontWeight: 900, color: "black" }}>
-          Your Bookings:
+          Your Bookings
         </Text>
       </View>
       <ScrollView style={{ flex: 1, paddingHorizontal: 20 }}>

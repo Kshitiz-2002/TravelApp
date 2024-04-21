@@ -17,7 +17,7 @@ const NavigationScreen = () => {
       initialRouteName="Home"
       screenOptions={({ route }) => ({
         tabBarStyle: {
-          backgroundColor: "#5053FF",
+          backgroundColor: "#91B3FA",
           borderTopRightRadius: 35,
           borderTopLeftRadius: 35,
           paddingBottom: 0,

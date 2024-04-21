@@ -36,38 +36,58 @@ const TrainBooking = () => {
     setTrainCards([
       {
         id: 1,
+        type: "train",
         name: "Train 1",
         departure: "10:00 AM",
         arrival: "1:00 PM",
         duration: "3 hours",
+        from: source === "Chennai" ? "MAS" : "",
+        to: destination === "Vellore" ? "KPD" : "",
+        date: "24th April 2024",
       },
       {
         id: 2,
+        type: "train",
         name: "Train 2",
-        departure: "12:00 PM",
-        arrival: "3:00 PM",
+        departure: "10:00 AM",
+        arrival: "1:00 PM",
         duration: "3 hours",
+        from: source === "Chennai" ? "MAS" : "",
+        to: destination === "Vellore" ? "KPD" : "",
+        date: "24th April 2024",
       },
       {
         id: 3,
+        type: "train",
         name: "Train 3",
-        departure: "2:00 PM",
-        arrival: "5:00 PM",
+        departure: "10:00 AM",
+        arrival: "1:00 PM",
         duration: "3 hours",
+        from: source === "Chennai" ? "MAS" : "",
+        to: destination === "Vellore" ? "KPD" : "",
+        date: "24th April 2024",
       },
       {
         id: 4,
+        type: "train",
         name: "Train 4",
-        departure: "4:00 PM",
-        arrival: "7:00 PM",
+        departure: "10:00 AM",
+        arrival: "1:00 PM",
         duration: "3 hours",
+        from: source === "Chennai" ? "MAS" : "",
+        to: destination === "Vellore" ? "KPD" : "",
+        date: "24th April 2024",
       },
       {
         id: 5,
+        type: "train",
         name: "Train 5",
-        departure: "6:00 PM",
-        arrival: "9:00 PM",
+        departure: "10:00 AM",
+        arrival: "1:00 PM",
         duration: "3 hours",
+        from: source === "Chennai" ? "MAS" : "",
+        to: destination === "Vellore" ? "KPD" : "",
+        date: "24th April 2024",
       },
       // Add more train cards as needed
     ]);
@@ -75,6 +95,14 @@ const TrainBooking = () => {
 
   const handleTrainSelect = (trainId) => {
     setSelectedTrainId(trainId);
+  };
+
+  const handleBookNow = () => {
+    // Clear all inputs
+    setSource("");
+    setDestination("");
+    setSelectedTrainId(null);
+    setTrainCards([]);
   };
 
   return (
@@ -211,6 +239,7 @@ const TrainBooking = () => {
         </ScrollView>
         {destination && selectedTrainId && (
           <TouchableOpacity
+            onPress={handleBookNow} // Call handleBookNow onPress
             style={{
               position: "absolute",
               bottom: 20,
@@ -231,5 +260,6 @@ const TrainBooking = () => {
 };
 
 export default TrainBooking;
+
 
 

@@ -144,7 +144,7 @@ const HomeScreen = () => {
           }}
         >
           <Text style={{ fontSize: 23, fontWeight: 700, color: "black" }}>
-            Your Bookings:
+            Your Bookings
           </Text>
         </View>
         <ScrollView style={{ flex: 1, paddingHorizontal: 20 }}>
