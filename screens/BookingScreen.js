@@ -91,7 +91,7 @@ const BookingScreen = ({ route }) => {
         setBookingsData(data);
       })
       .catch((error) => console.error("Error fetching bookings data:", error));
-  }, []);
+  }, [bookingsData]);
   
 
   return (

@@ -28,7 +28,7 @@ const HomeScreen = ({ route }) => {
         setBookingsData(data);
       })
       .catch((error) => console.error("Error fetching bookings data:", error));
-  }, []);
+  }, [bookingsData]);
 
   const handleCardPress = (desc) => {
     switch (desc) {
