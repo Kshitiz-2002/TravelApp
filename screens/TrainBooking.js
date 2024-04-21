@@ -6,7 +6,10 @@ import {
   Modal,
   ScrollView,
   SafeAreaView,
+  Platform
 } from "react-native";
+import { useDispatch } from 'react-redux';
+import { addTrainBooking } from '../store/reducers/appSlice';
 
 const TrainBooking = () => {
   const [showSourceModal, setShowSourceModal] = useState(false);
@@ -15,6 +18,7 @@ const TrainBooking = () => {
   const [destination, setDestination] = useState("");
   const [trainCards, setTrainCards] = useState([]);
   const [selectedTrainId, setSelectedTrainId] = useState(null);
+  const dispatch = useDispatch();
 
   const themeColor = "#5053FF"; // Define your theme color here
 
@@ -98,15 +102,33 @@ const TrainBooking = () => {
   };
 
   const handleBookNow = () => {
+    if (!selectedTrainId) {
+      Alert.alert("Error", "Please select a train to book.");
+      return;
+    }
+  
+    // Find the selected train by its ID
+    const selectedTrain = trainCards.find(train => train.id === selectedTrainId);
+  
+    // Check if the selected train is found
+    if (!selectedTrain) {
+      Alert.alert("Error", "Invalid train selection.");
+      return;
+    }
+  
+    // Dispatch the selected train to the Redux store
+    dispatch(addTrainBooking(selectedTrain));
+  
     // Clear all inputs
     setSource("");
     setDestination("");
     setSelectedTrainId(null);
     setTrainCards([]);
   };
+  
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 , marginTop: Platform.OS ==="ios" ? 0:20}}>
       <View style={{ flex: 1, backgroundColor: "#F4F4F4", padding: 20 }}>
         <Text
           style={{

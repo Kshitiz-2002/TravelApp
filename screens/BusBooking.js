@@ -6,7 +6,10 @@ import {
   Modal,
   ScrollView,
   SafeAreaView,
+  Platform
 } from "react-native";
+import { useDispatch } from 'react-redux';
+import { addBusBooking } from '../store/reducers/appSlice';
 
 const BusBooking = () => {
   const [showSourceModal, setShowSourceModal] = useState(false);
@@ -15,6 +18,7 @@ const BusBooking = () => {
   const [destination, setDestination] = useState("");
   const [busCards, setBusCards] = useState([]);
   const [selectedBusId, setSelectedBusId] = useState(null);
+  const dispatch = useDispatch();
 
   const themeColor = "#5053FF"; // Define your theme color here
 
@@ -87,6 +91,18 @@ const BusBooking = () => {
   };
 
   const handleBookNow = () => {
+
+    dispatch(addBusBooking({
+      id: selectedBusId,
+      name: busCards.find(bus => bus.id === selectedBusId).name,
+      departure: busCards.find(bus => bus.id === selectedBusId).departure,
+      arrival: busCards.find(bus => bus.id === selectedBusId).arrival,
+      duration: busCards.find(bus => bus.id === selectedBusId).duration,
+      from: busCards.find(bus => bus.id === selectedBusId).from,
+      to: busCards.find(bus => bus.id === selectedBusId).to,
+      date: busCards.find(bus => bus.id === selectedBusId).date,
+    }));
+
     // Clear all inputs
     setSource("");
     setDestination("");
@@ -95,7 +111,7 @@ const BusBooking = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, marginTop: Platform.OS ==="ios" ? 0:20 }}>
       <View style={{ flex: 1, backgroundColor: "#F4F4F4", padding: 20 }}>
         <Text
           style={{

@@ -6,7 +6,7 @@ const Card = ({ imgUrl, desc }) => {
       style={{
         backgroundColor: "#731EFF",
         height: "70%",
-        width: "90%%",
+        width: "90%",
         flexDirection: "row",
         alignItems: "center",
         borderRadius: 25,

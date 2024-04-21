@@ -7,8 +7,12 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
+import { useDispatch } from "react-redux";
+import { setUserLoginStatus } from "../store/reducers/appSlice";
 
 const LoginScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+
   const [phoneNumber, setPhoneNumber] = useState("");
   const [enteredOTP, setEnteredOTP] = useState("");
   const [generatedOTP, setGeneratedOTP] = useState(""); // State to store the generated OTP
@@ -38,6 +42,7 @@ const LoginScreen = ({ navigation }) => {
 
   const handleVerifyOTP = () => {
     if (enteredOTP === generatedOTP) {
+      dispatch(setUserLoginStatus(true));
       // Redirect to Home screen if OTP is correct
       navigation.navigate("NavigationScreen");
     } else {
