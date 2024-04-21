@@ -6,19 +6,18 @@ import {
   Modal,
   ScrollView,
   SafeAreaView,
-  Platform
+  Platform,
+  Alert,
 } from "react-native";
-import { useDispatch } from 'react-redux';
-import { addTrainBooking } from '../store/reducers/appSlice';
 
-const TrainBooking = () => {
+const TrainBooking = ({ route }) => {
+  const { user } = route.params;
   const [showSourceModal, setShowSourceModal] = useState(false);
   const [showDestinationModal, setShowDestinationModal] = useState(false);
   const [source, setSource] = useState("");
   const [destination, setDestination] = useState("");
   const [trainCards, setTrainCards] = useState([]);
   const [selectedTrainId, setSelectedTrainId] = useState(null);
-  const dispatch = useDispatch();
 
   const themeColor = "#5053FF"; // Define your theme color here
 
@@ -45,52 +44,8 @@ const TrainBooking = () => {
         departure: "10:00 AM",
         arrival: "1:00 PM",
         duration: "3 hours",
-        from: source === "Chennai" ? "MAS" : "",
-        to: destination === "Vellore" ? "KPD" : "",
-        date: "24th April 2024",
-      },
-      {
-        id: 2,
-        type: "train",
-        name: "Train 2",
-        departure: "10:00 AM",
-        arrival: "1:00 PM",
-        duration: "3 hours",
-        from: source === "Chennai" ? "MAS" : "",
-        to: destination === "Vellore" ? "KPD" : "",
-        date: "24th April 2024",
-      },
-      {
-        id: 3,
-        type: "train",
-        name: "Train 3",
-        departure: "10:00 AM",
-        arrival: "1:00 PM",
-        duration: "3 hours",
-        from: source === "Chennai" ? "MAS" : "",
-        to: destination === "Vellore" ? "KPD" : "",
-        date: "24th April 2024",
-      },
-      {
-        id: 4,
-        type: "train",
-        name: "Train 4",
-        departure: "10:00 AM",
-        arrival: "1:00 PM",
-        duration: "3 hours",
-        from: source === "Chennai" ? "MAS" : "",
-        to: destination === "Vellore" ? "KPD" : "",
-        date: "24th April 2024",
-      },
-      {
-        id: 5,
-        type: "train",
-        name: "Train 5",
-        departure: "10:00 AM",
-        arrival: "1:00 PM",
-        duration: "3 hours",
-        from: source === "Chennai" ? "MAS" : "",
-        to: destination === "Vellore" ? "KPD" : "",
+        from: value === "Chennai" ? "MAS" : "KPD",
+        to: value === "Vellore" ? "KPD" : "MAS",
         date: "24th April 2024",
       },
       // Add more train cards as needed
@@ -107,18 +62,51 @@ const TrainBooking = () => {
       return;
     }
   
-    // Find the selected train by its ID
-    const selectedTrain = trainCards.find(train => train.id === selectedTrainId);
-  
-    // Check if the selected train is found
+    // Find the selected train from trainCards
+    const selectedTrain = trainCards.find(
+      (train) => train.id === selectedTrainId
+    );
     if (!selectedTrain) {
       Alert.alert("Error", "Invalid train selection.");
       return;
     }
-  
-    // Dispatch the selected train to the Redux store
-    dispatch(addTrainBooking(selectedTrain));
-  
+    console.log("--------------------------"); // Log selectedTrain here
+    console.log("Selected Train:", selectedTrain); // Log selectedTrain here
+    // Dispatch a request to book the train
+    fetch(
+      "https://37973617-312d-4204-87c1-820311894e52-00-jlkxz5wqwbyh.sisko.replit.dev/train-booking",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          phonenum: user.phone,
+          train: {
+            id: selectedTrain.id,
+            type: selectedTrain.type,
+            name: selectedTrain.name,
+            departure: selectedTrain.departure,
+            arrival: selectedTrain.arrival,
+            duration: selectedTrain.duration,
+            from: selectedTrain.from,
+            to: selectedTrain.to,
+            date: selectedTrain.date,
+          },
+        }),
+      }
+    )
+    .then((response) => response.text())
+    .then((data) => {
+      // Handle the response data as plain text
+      console.log(data);
+      // Parse the data as needed
+    })
+    .catch((error) => {
+      // Handle error
+      console.error(error);
+      Alert.alert("Error", "An error occurred while booking the train.");
+    });
     // Clear all inputs
     setSource("");
     setDestination("");
@@ -128,7 +116,9 @@ const TrainBooking = () => {
   
 
   return (
-    <SafeAreaView style={{ flex: 1 , marginTop: Platform.OS ==="ios" ? 0:20}}>
+    <SafeAreaView
+      style={{ flex: 1, marginTop: Platform.OS === "ios" ? 0 : 20 }}
+    >
       <View style={{ flex: 1, backgroundColor: "#F4F4F4", padding: 20 }}>
         <Text
           style={{
@@ -282,6 +272,3 @@ const TrainBooking = () => {
 };
 
 export default TrainBooking;
-
-
-

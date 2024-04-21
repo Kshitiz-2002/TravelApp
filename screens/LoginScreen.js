@@ -7,20 +7,12 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import { useDispatch } from "react-redux";
-import { setUserLoginStatus } from "../store/reducers/appSlice";
 
 const LoginScreen = ({ navigation }) => {
-  const dispatch = useDispatch();
-
   const [phoneNumber, setPhoneNumber] = useState("");
   const [enteredOTP, setEnteredOTP] = useState("");
-  const [generatedOTP, setGeneratedOTP] = useState(""); // State to store the generated OTP
-  const [showOTP, setShowOTP] = useState(false); // State to manage OTP input and button visibility
-
-  const handleNameChange = (text) => {
-    setName(text);
-  };
+  const [generatedOTP, setGeneratedOTP] = useState("");
+  const [showOTP, setShowOTP] = useState(false);
 
   const handlePhoneNumberChange = (text) => {
     setPhoneNumber(text);
@@ -28,25 +20,41 @@ const LoginScreen = ({ navigation }) => {
 
   const handleSendOTP = () => {
     if (!phoneNumber) {
-      Alert.alert("Error", "Please enter your name and phone number.");
+      Alert.alert("Error", "Please enter your phone number.");
       return;
     }
 
     // Simulated OTP sending logic (replace this with actual OTP sending code)
-    const otp = Math.floor(1000 + Math.random() * 9000).toString(); // Generate a random OTP (example)
+    const otp = Math.floor(1000 + Math.random() * 9000).toString();
     setGeneratedOTP(otp);
     Alert.alert("OTP Sent", `An OTP has been sent to ${phoneNumber}: ${otp}`);
 
-    setShowOTP(true); // Show OTP input and button when Send OTP is pressed
+    setShowOTP(true);
   };
 
-  const handleVerifyOTP = () => {
-    if (enteredOTP === generatedOTP) {
-      dispatch(setUserLoginStatus(true));
-      // Redirect to Home screen if OTP is correct
-      navigation.navigate("NavigationScreen");
-    } else {
-      Alert.alert("Wrong OTP", "Please enter the correct OTP.");
+  const handleVerifyOTP = async () => {
+    try {
+      const response = await fetch("https://37973617-312d-4204-87c1-820311894e52-00-jlkxz5wqwbyh.sisko.replit.dev/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          phone: phoneNumber,
+          otp: enteredOTP,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        navigation.navigate("NavigationScreen", { user: data.user });
+      } else {
+        Alert.alert("Login Failed", data.error);
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert("Error", "Failed to login. Please try again later.");
     }
   };
 
@@ -81,7 +89,7 @@ const LoginScreen = ({ navigation }) => {
             value={phoneNumber}
             onChangeText={handlePhoneNumberChange}
           />
-          {!showOTP && ( // Render Send OTP button if showOTP is false
+          {!showOTP && (
             <TouchableOpacity
               style={{
                 backgroundColor: "#5053FF",
@@ -93,16 +101,14 @@ const LoginScreen = ({ navigation }) => {
                 marginBottom: 15,
                 marginTop: 10,
               }}
-              onPress={handleSendOTP} // Call handleSendOTP when button is pressed
+              onPress={handleSendOTP}
             >
-              <Text
-                style={{ fontSize: 20, fontWeight: "bold", color: "white" }}
-              >
+              <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
                 Send OTP
               </Text>
             </TouchableOpacity>
           )}
-          {showOTP && ( // Render OTP input and Verify button if showOTP is true
+          {showOTP && (
             <>
               <TextInput
                 style={{
@@ -128,11 +134,9 @@ const LoginScreen = ({ navigation }) => {
                   alignItems: "center",
                   justifyContent: "center",
                 }}
-                onPress={handleVerifyOTP} // Call handleVerifyOTP when Verify button is pressed
+                onPress={handleVerifyOTP}
               >
-                <Text
-                  style={{ fontSize: 20, fontWeight: "bold", color: "white" }}
-                >
+                <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
                   Verify
                 </Text>
               </TouchableOpacity>

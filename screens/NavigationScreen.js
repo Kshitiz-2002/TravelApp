@@ -11,7 +11,9 @@ import BusBooking from "./BusBooking";
 
 const Tab = createBottomTabNavigator();
 
-const NavigationScreen = () => {
+const NavigationScreen = ({ route }) => {
+  const { user } = route.params;
+  
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -53,27 +55,32 @@ const NavigationScreen = () => {
       <Tab.Screen
         name="Train"
         component={TrainBooking}
-        options={{ tabBarLabel: "", headerShown: false }} 
+        options={{ tabBarLabel: "", headerShown: false }}
+        initialParams={{ user }} // Pass user data as initialParams
       />
       <Tab.Screen
         name="Bus"
         component={BusBooking}
-        options={{ tabBarLabel: "", headerShown: false }} 
+        options={{ tabBarLabel: "", headerShown: false }}
+        initialParams={{ user }} // Pass user data as initialParams
       />
       <Tab.Screen
         name="Home"
         component={HomeScreen}
         options={{ tabBarLabel: "", headerShown: false }}
+        initialParams={{ user }} // Pass user data as initialParams
       />
       <Tab.Screen
         name="Booking"
         component={BookingScreen}
-        options={{ tabBarLabel: "", headerShown: false }} 
+        options={{ tabBarLabel: "", headerShown: false }}
+        initialParams={{ user }} // Pass user data as initialParams
       />
       <Tab.Screen
         name="Account"
         component={AccountScreen}
-        options={{ tabBarLabel: "", headerShown: false }} 
+        options={{ tabBarLabel: "", headerShown: false }}
+        initialParams={{ user }} // Pass user data as initialParams
       />
     </Tab.Navigator>
   );

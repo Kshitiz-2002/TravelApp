@@ -8,17 +8,15 @@ import {
   SafeAreaView,
   Platform
 } from "react-native";
-import { useDispatch } from 'react-redux';
-import { addBusBooking } from '../store/reducers/appSlice';
 
-const BusBooking = () => {
+const BusBooking = ({route}) => {
+  const { user } = route.params;
   const [showSourceModal, setShowSourceModal] = useState(false);
   const [showDestinationModal, setShowDestinationModal] = useState(false);
   const [source, setSource] = useState("");
   const [destination, setDestination] = useState("");
   const [busCards, setBusCards] = useState([]);
   const [selectedBusId, setSelectedBusId] = useState(null);
-  const dispatch = useDispatch();
 
   const themeColor = "#5053FF"; // Define your theme color here
 
@@ -45,41 +43,8 @@ const BusBooking = () => {
         departure: "10:00 AM",
         arrival: "1:00 PM",
         duration: "3 hours",
-        from: source === "Chennai" ? "MAS" : "",
-        to: destination === "Vellore" ? "KPD" : "",
-        date: "24th April 2024",
-      },
-      {
-        id: 2,
-        type: "bus",
-        name: "Bus 2",
-        departure: "12:00 PM",
-        arrival: "3:00 PM",
-        duration: "3 hours",
-        from: source === "Chennai" ? "MAS" : "",
-        to: destination === "Vellore" ? "KPD" : "",
-        date: "24th April 2024",
-      },
-      {
-        id: 3,
-        type: "bus",
-        name: "Bus 3",
-        departure: "2:00 PM",
-        arrival: "5:00 PM",
-        duration: "3 hours",
-        from: source === "Chennai" ? "MAS" : "",
-        to: destination === "Vellore" ? "KPD" : "",
-        date: "24th April 2024",
-      },
-      {
-        id: 4,
-        type: "bus",
-        name: "Bus 4",
-        departure: "4:00 PM",
-        arrival: "7:00 PM",
-        duration: "3 hours",
-        from: source === "Chennai" ? "MAS" : "",
-        to: destination === "Vellore" ? "KPD" : "",
+        from: source === "Chennai" ? "MAS" : "KPD",
+        to: destination === "Vellore" ? "KPD" : "MAS",
         date: "24th April 2024",
       },
       // Add more bus cards as needed
@@ -91,24 +56,57 @@ const BusBooking = () => {
   };
 
   const handleBookNow = () => {
-
-    dispatch(addBusBooking({
-      id: selectedBusId,
-      name: busCards.find(bus => bus.id === selectedBusId).name,
-      departure: busCards.find(bus => bus.id === selectedBusId).departure,
-      arrival: busCards.find(bus => bus.id === selectedBusId).arrival,
-      duration: busCards.find(bus => bus.id === selectedBusId).duration,
-      from: busCards.find(bus => bus.id === selectedBusId).from,
-      to: busCards.find(bus => bus.id === selectedBusId).to,
-      date: busCards.find(bus => bus.id === selectedBusId).date,
-    }));
-
+    if (!selectedBusId) {
+      Alert.alert("Error", "Please select a bus to book.");
+      return;
+    }
+  
+    // Find the selected bus from busCards
+    const selectedBus = busCards.find((bus) => bus.id === selectedBusId);
+    if (!selectedBus) {
+      Alert.alert("Error", "Invalid bus selection.");
+      return;
+    }
+  
+    // Dispatch a request to book the bus
+    fetch("https://37973617-312d-4204-87c1-820311894e52-00-jlkxz5wqwbyh.sisko.replit.dev/bus-booking", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        phonenum: user.phone,
+        bus: {
+          id: selectedBus.id,
+          type: selectedBus.type,
+          name: selectedBus.name,
+          departure: selectedBus.departure,
+          arrival: selectedBus.arrival,
+          duration: selectedBus.duration,
+          from: selectedBus.from,
+          to: selectedBus.to,
+          date: selectedBus.date,
+        },
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle the response data
+        console.log(data);
+        // Show success message to the user
+      })
+      .catch((error) => {
+        // Handle error
+        console.error(error);
+      });
+  
     // Clear all inputs
     setSource("");
     setDestination("");
     setSelectedBusId(null);
     setBusCards([]);
   };
+  
 
   return (
     <SafeAreaView style={{ flex: 1, marginTop: Platform.OS ==="ios" ? 0:20 }}>
