@@ -19,7 +19,7 @@ const AccountScreen = ({route}) => {
         {user && (
           <View style={{ backgroundColor: "white", borderRadius: 10, padding: 20 }}>
             <Text style={{ fontSize: 18, marginBottom: 10 }}>Name: {user.username}</Text>
-            <Text style={{ fontSize: 18, marginBottom: 10 }}>Phone: {user.phone}</Text>
+            <Text style={{ fontSize: 18, marginBottom: 10 }}>Phone: {user.phoneNumber}</Text>
           </View>
         )}
         <TouchableOpacity

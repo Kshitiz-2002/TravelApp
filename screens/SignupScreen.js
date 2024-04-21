@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, SafeAreaView, TextInput, TouchableOpacity, Alert } from 'react-native';
 
 const SignupScreen = ({ navigation }) => {
-  const [name, setName] = useState('');
+  const [username, setUserName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [enteredOTP, setEnteredOTP] = useState('');
   const [generatedOTP, setGeneratedOTP] = useState('');
@@ -11,7 +11,7 @@ const SignupScreen = ({ navigation }) => {
   const [error, setError] = useState(null); // State to manage error locally
 
   const handleNameChange = (text) => {
-    setName(text);
+    setUserName(text);
   };
 
   const handlePhoneNumberChange = (text) => {
@@ -19,7 +19,7 @@ const SignupScreen = ({ navigation }) => {
   };
 
   const handleSendOTP = () => {
-    if (!name || !phoneNumber) {
+    if (!username || !phoneNumber) {
       Alert.alert('Error', 'Please enter your name and phone number.');
       return;
     }
@@ -40,7 +40,7 @@ const SignupScreen = ({ navigation }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          username: name,
+          username: username,
           phone: phoneNumber,
         }),
       });
@@ -50,7 +50,7 @@ const SignupScreen = ({ navigation }) => {
       if (response.ok) {
         // Redirect to Home screen if signup is successful
         navigation.navigate('NavigationScreen', {
-          user: { name, phoneNumber },
+          user: { username, phoneNumber },
         });
       } else {
         Alert.alert('Signup Failed', data.error);
@@ -88,7 +88,7 @@ const SignupScreen = ({ navigation }) => {
               marginBottom: 15,
             }}
             placeholder="Name"
-            value={name}
+            value={username}
             onChangeText={handleNameChange}
           />
           <TextInput

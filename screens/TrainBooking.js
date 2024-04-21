@@ -81,7 +81,7 @@ const TrainBooking = ({ route }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          phonenum: user.phone,
+          phonenum: user.phoneNumber,
           train: {
             id: selectedTrain.id,
             type: selectedTrain.type,

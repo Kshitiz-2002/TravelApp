@@ -83,7 +83,7 @@ const BookingScreen = ({ route }) => {
 
   useEffect(() => {
     // Fetch bookings data from the server
-    fetch(`https://37973617-312d-4204-87c1-820311894e52-00-jlkxz5wqwbyh.sisko.replit.dev/bookings/${user.phone}`)
+    fetch(`https://37973617-312d-4204-87c1-820311894e52-00-jlkxz5wqwbyh.sisko.replit.dev/bookings/${user.phoneNumber}`)
       .then((response) => response.json())
       .then((data) => {
         console.log("Fetched bookings data:", data); // Log the fetched data
