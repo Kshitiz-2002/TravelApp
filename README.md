@@ -1,4 +1,3 @@
-```markdown
 # Travel Booking App
 
 This is a mobile application for booking train and bus tickets.
